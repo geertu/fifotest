@@ -1,0 +1,40 @@
+Serial FIFO Test Program
+------------------------
+
+"fifotest" is a test program for checking the integrity of the serial port
+FIFOs.
+
+Features:
+  - Opens and closes the serial port for each message,
+  - Sends variable length messages,
+  - Consumes received messages partly (the remainder is supposed to be
+    flushed),
+  - Data is generated randomly, using a seed for reproducability (seed zero
+    means pseudo-random),
+  - Received data is verified against the expected data
+
+
+Usage:
+
+    fifotest: [options] <txdev> <rxdev>
+
+    Valid options are:
+	-h, --help       Display this usage information
+	-i, --seed       Initial seed (zero is pseudorandom)
+	-l, --len        Maximum message length (default 1024, must be <= 4096)
+	-n               Number of messages to send (default zero is unlimited)
+	-s, --speed      Serial speed
+	-v, --verbose    Enable verbose mode
+
+    The first device specified is used for output, the second device is used
+    for input.
+
+
+Examples:
+
+  * Transmitting from ttyS0 to ttyS1:
+
+	fifotest /dev/ttyS0 /dev/ttyS1 -s 1000000 -n 10
+
+    Wiring:
+        TXD0 -> RXD1
